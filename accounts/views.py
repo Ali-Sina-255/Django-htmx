@@ -5,9 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from . forms import LoginForm
 
 
-def index(request):
-    return render(request, 'index.html')
-
 
 def login_view(request):
     if request.method == 'POST':
@@ -50,4 +47,3 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
         return redirect('login')
-    
