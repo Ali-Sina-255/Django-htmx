@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from . forms import LoginForm
 
 
-
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)

@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
-
 {% block content %}
 <div class="align-center col-8 offset-2">
     <p class="lead mb-3 ml-0">Register</p>
     <hr/>
     <form method="POST" action="{% url 'register' %}" autocomplete='off'>
         {% csrf_token %}
-
         <div class="form-group mb-3">
             <label>{{ form.username.label_tag }}</label>
             {{ form.username.errors }}
-            {% render_field form.username class="form-control" %}
+            {% render_field form.username class="form-control" hx-post="/check_username/" hx-trigger="keyup" hx-swap="outerHTML" hx-target="#usernmae-error" %}
+            <div id='usernmae-error'></div>
 
             <label>{{ form.password1.label_tag }}</label>
             {{ form.password1.errors }}
@@ -21,7 +20,6 @@
             {{ form.password2.errors }}
             {% render_field form.password2 class="form-control" %}
         </div>
-        
         <button type="submit" class="btn btn-success mt-2">Register</button>
     </form>
 </div>

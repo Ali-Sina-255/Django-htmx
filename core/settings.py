@@ -37,10 +37,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'widget_tweaks',
+    "django_htmx",
+    'widget_tweaks',    
+    'films.apps.FilmsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
+    
+    "django_htmx.middleware.HtmxMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
