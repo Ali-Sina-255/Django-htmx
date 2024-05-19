@@ -1,26 +1,38 @@
-<div class='d-flex justify-content-between'>
-    <section class='col-6'>
-        {% if films %}
-            <ul class='list-group col-12'>
-            {% for film in films %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ film.film }}
-                    <span class='badge badge-pill badge-danger' style='cursor: pointer;'
-                    hx-delete='{% url "delete_film" film.pk %}'
-                    hx-headers= '{"X-CSRFToken":"{{csrf_token}}"}'
-                    hx-target='#film-list'
-                    hx-confirm='Are you sure you want to delete ?'>X</span>
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>You do not have any films in your list</p>
-        {% endif %}
-    </section>
+<div class="d-flex justify-content-between">
+  <section class="col-6">
+    {% if films %} {% csrf_token %}
 
+    <form
+      class="sortable list-group col-xs-12"
+      hx-trigger="end"
+      hx-post="/sort"
+      hx-traget="#film-list"
+    >
+      <div class="htmx-indicator">Updating...</div>
+      {% for film in films %}
+      <div>
+        <input type="hidden" name="film_order" value="{{film.pk}}" />
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          {{ film.film }}
+          <span
+            class="badge badge-pill badge-danger"
+            style="cursor: pointer"
+            hx-delete='{% url "delete_film" film.pk %}'
+            hx-headers='{"X-CSRFToken":"{{csrf_token}}"}'
+            hx-target="#film-list"
+            hx-confirm="Are you sure you want to delete ?"
+            >X</span
+          >
+        </li>
+      </div>
+      {% endfor %}
+    </form>
+    {% else %}
+    <p>You do not have any films in your list</p>
+    {% endif %}
+  </section>
 
-    <section>
-        {% include 'partials/search.html' %}
-    </section>
-
+  <section>{% include 'partials/search.html' %}</section>
 </div>
