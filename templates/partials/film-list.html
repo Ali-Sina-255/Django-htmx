@@ -1,13 +1,14 @@
 <div class="d-flex justify-content-between">
   <section class="col-6">
-    {% if films %} {% csrf_token %}
+    {% csrf_token %} {% if films %}
 
     <form
       class="sortable list-group col-xs-12"
       hx-trigger="end"
-      hx-post="/sort"
+      hx-post="{% url 'sort' %}"
       hx-traget="#film-list"
     >
+      {% csrf_token %}
       <div class="htmx-indicator">Updating...</div>
       {% for film in films %}
       <div>
@@ -15,7 +16,7 @@
         <li
           class="list-group-item d-flex justify-content-between align-items-center"
         >
-          {{ film.film }}
+          #{{ film.order }} {{ film.film.film }}
           <span
             class="badge badge-pill badge-danger"
             style="cursor: pointer"
@@ -29,6 +30,7 @@
       </div>
       {% endfor %}
     </form>
+
     {% else %}
     <p>You do not have any films in your list</p>
     {% endif %}
