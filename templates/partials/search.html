@@ -1,15 +1,16 @@
 <div class="d-flex justify-content-end mb-4">
-<form action="">
-{% csrf_token %}
-<input type="text" 
-    hx-post="{% url 'search_view' %}"
-    hx-target='#result'
-    hx-trgger="keyup changed delay:500ms"
-    name = "search"
-    placeholder="Search.."
-    class='form-control-sm mr-2'
-    >
-</form>
+   
+    {% csrf_token %}
+    <input type="text" 
+        hx-post="{% url 'search_film_view' %}"
+        hx-target='#result'
+        hx-trigger="keyup changed delay:500ms"
+        name = "search"
+        placeholder="Search.."
+        class='form-control-sm mr-2'
+        />
+    </form>
 </div>
-
-<div id="result"></div>
+<div id="result">
+    
+</div>

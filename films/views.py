@@ -30,7 +30,7 @@ def film(request):
 @login_required(login_url='login')
 def add_film(request):
     name = request.POST['filmname']
-    film = Film.objects.create(film=name)
+    film = Film.objects.get_or_create(film=name)[0]
     # add the film to the user's list
     request.user.film.add(film)
     
@@ -50,11 +50,11 @@ def delete_film_view(request, pk):
     return render(request, 'partials/film-list.html', context)
 
 def search_film_view(request):
-    result = request.POST.get('search')
-    result = Film.objects.filter(film__icontains=result)
+    result_text = request.POST.get('search')
+    results = Film.objects.filter(film__icontains=result_text)
     context = {
-        "result":result
+        "results":results
     }
-    return render(request, 'partials/film-list.html',context)
+    return render(request, 'partials/sreach-result.html',context)
 
 
