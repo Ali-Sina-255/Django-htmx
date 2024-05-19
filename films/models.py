@@ -6,6 +6,7 @@ from django.db.models.functions import Lower
 class Film(models.Model):
     user = models.ManyToManyField(User, related_name='film', through='UserFilm')
     film = models.CharField(max_length=255, unique=True)
+    photo = models.ImageField(upload_to='film-images/', null=True, blank=True)
 
     def __str__(self) -> str:
         return self.film

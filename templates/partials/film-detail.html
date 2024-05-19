@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-between align-items-center">
+  <div>
+    <h2 class="text-success">{{user_films.film}}</h2>
+    <p>
+      this film is #{{user_films.order}} in {{user_films.user.username|title}}'s
+      list
+    </p>
+    <button
+      class="btn btn-success"
+      hx-get="{% url 'film-list-partial' %}"
+      hx-target="#film-list"
+    >
+      Your List
+    </button>
+  </div>
+  <div>
+    {% if user_films.film.photo %}
+    <img
+      src=" {{user_films.film.photo.url}}"
+      styel="max-width:200px; max-height:200px"
+    />
+    {% else %} No photo is found {% endi%}
+  </div>
+</div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -55,10 +55,10 @@ def delete_film_view(request, pk):
 
 def search_film_view(request):
     result_text = request.POST.get('search')
-    userfilm = UserFilm.objects.filter(user=request.user)
+    user_film = UserFilm.objects.filter(user=request.user)
 
     results = Film.objects.filter(film__icontains=result_text).exclude(
-        name__in = userfilm.values_list('film__film', flat=True)
+        name__in = user_film.values_list('film__film', flat=True)
     )
     context = {
         "results":results
@@ -72,9 +72,22 @@ def sort(request):
     print(film_pk_order)
     film = []
     for index,film_pk in enumerate(film_pk_order, start=1):
-        userfile = UserFilm.objects.get(pk=film_pk)
-        userfile.order = index
-        userfile.save()
-        film.append(userfile)
+        user_film = UserFilm.objects.get(pk=film_pk)
+        user_film.order = index
+        user_film.save()
+        film.append(user_film)
     context = {"films":film}
+    return render(request, 'partials/film-list.html', context)
+
+def detail_view(request,pk):
+    user_films = get_object_or_404(UserFilm, pk=pk)
+    context = {"user_films":user_films}
+    return render(request, 'partials/film-detail.html', context)
+
+
+def film_list_partial_view(request):
+    films = UserFilm.objects.filter(user=request.user)
+    context = {
+        "films":films
+    }
     return render(request, 'partials/film-list.html', context)
