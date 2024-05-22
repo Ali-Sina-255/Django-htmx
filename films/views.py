@@ -3,12 +3,16 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 from. models import Film,UserFilm
 from . utils import get_max_order, reorder
+from . forms import ImageForm
+
+
 def index(request):
     return render(request, 'index.html')
+
 
 def check_username(request):
     username = request.POST.get('username')
@@ -16,6 +20,7 @@ def check_username(request):
         return HttpResponse('<div id="username-error" class="success">this username is already exists<div>')
     else:
         return HttpResponse('<div id="username-error" class="error" > this username is available<div>')
+
 
 @login_required(login_url='login')
 def film(request):
@@ -87,7 +92,22 @@ def detail_view(request,pk):
 
 def film_list_partial_view(request):
     films = UserFilm.objects.filter(user=request.user)
+    paginator = Paginator(films, 3)
+    page = request.GET.get('page')
+    paged_all_user_film = paginator.get_page(page)
+  
     context = {
-        "films":films
+        "films":paged_all_user_film
     }
     return render(request, 'partials/film-list.html', context)
+
+
+def upload_photo_view(request,pk):
+    user_film = get_object_or_404(UserFilm, pk=pk)
+    print(request.FILES)
+    photo = request.FILES.get('photo')
+    user_film.film.photo.save(photo.name, photo) 
+    context = {
+        "user_film":user_film
+    }
+    return render(request, 'partials/film-detail.html', context)

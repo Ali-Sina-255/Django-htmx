@@ -16,9 +16,20 @@
   <div>
     {% if user_films.film.photo %}
     <img
-      src=" {{user_films.film.photo.url}}"
-      styel="max-width:200px; max-height:200px"
+      src="{{user_films.film.photo.url}}"
+      style="max-width: 200px; max-height: 200px"
     />
-    {% else %} No photo is found {% endi%}
+    {% else %} No photo :( {% endif%}
+    <form
+      hx-encoding="multipart/form-data"
+      hx-post='{% url "upload_photo" user_films.pk %}'
+      hx-target="#film-list"
+    >
+      {% csrf_token %}
+      <div class="form-group">
+        <input type="file" name="photo" />
+      </div>
+      <button class="btn btn-primary" type="submit">Upload File</button>
+    </form>
   </div>
 </div>
