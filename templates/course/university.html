@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+
+<select
+  class="form-select form-select-lg mb-3"
+  name="course"
+  hx-get="{% url 'modules' %}"
+  hx-trigger="change"
+  hx-traget="#modules"
+>
+  <option selected>Open this select menu</option>
+
+  {% for course in courses %}
+  <option value="{{course.pk}}">{{course}}</option>
+  {% endfor %}
+</select>
+
+<div id="modules">{% include 'partials/modules.html' %}</div>
+{% endblock %}

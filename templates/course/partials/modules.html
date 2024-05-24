@@ -1,0 +1,7 @@
+<select class="form-select form-select-lg mb-3" name="course">
+  <option selected>Open this select menu</option>
+
+  {% for module in course.module_set.all %}
+  <option value="{{module.pk}}">{{module}}</option>
+  {% endfor %}
+</select>
