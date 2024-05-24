@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'widget_tweaks',    
     'films.apps.FilmsConfig',
     'accounts.apps.AccountsConfig',
+    'courses.apps.CoursesConfig',
 ]
 
 MIDDLEWARE = [
