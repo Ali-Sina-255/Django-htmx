@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+<div class="container mt-4">{% block content %} 
+    
+    <form action="" hx-post="{% url 'add_new' %}" hx-traget='#course_list'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type='submit'>Submit</button>
+    </form>
+    <hr>
+    
+{% endblock %}</div>
+

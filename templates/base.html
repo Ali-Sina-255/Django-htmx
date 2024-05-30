@@ -44,11 +44,15 @@
       integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
       crossorigin="anonymous"
     ></script>
+
+    
   </head>
   <body>
     {% include 'partials/navbar.html' %}
 
-    <div class="container mt-4">{% block content %} {% endblock %}</div>
+    <div class="container mt-4">{% block content %}
+
+    {% endblock %}</div>
 
     <script>
       htmx.onLoad(function (content) {
@@ -79,6 +83,5 @@
       });
     </script>
 
-    
   </body>
 </html>
